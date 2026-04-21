@@ -1,3 +1,4 @@
+//Rutas de Categoria
 const express = require('express')
 const productos = require('../data/productos')
 
