@@ -8,8 +8,8 @@ categoriasRouter.post('/', (req, res) => {
     const body = req.body
     const categorias = productos.infoProductos
     productos.infoProductos = {
-        categorias,
-        body
+        ...categorias,
+        ...body
     }
     res.statusCode = 201
     res.end(JSON.stringify(body))    
