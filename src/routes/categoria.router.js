@@ -15,4 +15,9 @@ categoriasRouter.post('/', (req, res) => {
     res.end(JSON.stringify(body))    
 })
 
+categoriasRouter.get('/', (req, res) => {
+    const categorias = Object.keys(productos.infoProductos)
+    res.end(JSON.stringify(categorias))
+})
+
 module.exports = categoriasRouter
