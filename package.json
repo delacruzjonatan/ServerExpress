@@ -10,6 +10,7 @@
   "author": "Jonatan DE LA CRUZ",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.22.1"
+    "express": "^4.22.1",
+    "joi": "^18.2.1"
   }
 }

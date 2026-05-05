@@ -2,6 +2,7 @@ const express = require('express')
 const productos = require('./data/productos')
 const productoRouter = require('./routes/producto.router')
 const categoriaRouter = require('./routes/categoria.router')
+const { errorLog, errorHandler } = require('./middlewares/errorHandler')
 
 const app = express()
 
@@ -12,6 +13,9 @@ app.use('/categorias', categoriaRouter)
 app.get('/', (req, res) => {
     res.end('Servidor desarrollado con express')
 })
+
+app.use(errorLog)
+app.use(errorHandler)
 
 const puerto = 3000
 app.listen(puerto, () =>{
