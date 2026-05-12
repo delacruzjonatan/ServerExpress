@@ -6,7 +6,6 @@ const pool = mysql.createPool(config)
 
 async function testConnection() {
     try {
-        console.log(config)
         const connection = await pool.getConnection()
         console.info('Conexion exitosa con la DB MySQL')
         connection.release()
