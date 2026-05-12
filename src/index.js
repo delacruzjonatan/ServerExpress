@@ -1,8 +1,9 @@
 const express = require('express')
-const productos = require('./data/productos')
 const productoRouter = require('./routes/producto.router')
 const categoriaRouter = require('./routes/categoria.router')
 const { errorLog, errorHandler } = require('./middlewares/errorHandler')
+const { testConnection } = require('./db/connection')
+require('dotenv').config()
 
 const app = express()
 
@@ -17,7 +18,8 @@ app.get('/', (req, res) => {
 app.use(errorLog)
 app.use(errorHandler)
 
-const puerto = 3000
-app.listen(puerto, () =>{
+const puerto = process.env.PUERTO
+app.listen(puerto, async () =>{
+    await testConnection()
     console.log(`Servidor escuchando en el puerto ${puerto}`)
 })

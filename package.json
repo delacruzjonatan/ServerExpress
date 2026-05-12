@@ -10,7 +10,9 @@
   "author": "Jonatan DE LA CRUZ",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^4.22.1",
-    "joi": "^18.2.1"
+    "joi": "^18.2.1",
+    "mysql2": "^3.22.3"
   }
 }
