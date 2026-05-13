@@ -1,28 +1,54 @@
-const productos = require('../data/productos')
+const { pool } = require('../db/connection')
 
 class ProductoService {
-    constructor() {
-        this.productos = productos.infoProductos
+    async get() {
+        const sql =
+            `SELECT pro_id id, 
+                    pro_descripcion descripcion, 
+                    pro_precio precio, 
+                    cat_descripcion categoria 
+            FROM producto 
+                INNER JOIN categoria ON cat_id = pro_id_categoria`
+        const [rows] = await pool.query(sql)
+        return rows
     }
 
-    get() {
-        return productos.infoProductos
-    }
+    async getProductoPorCategoria(categoria) {
+        const sql =
+            `SELECT pro_id id, 
+                    pro_descripcion descripcion, 
+                    pro_precio precio, 
+                    cat_descripcion categoria 
+            FROM producto 
+                INNER JOIN categoria ON cat_id = pro_id_categoria
+            WHERE cat_id = ?`
+        const [rows] = await pool.query(sql, [categoria])
 
-    getProductoPorCategoria(categoria) {
-        const productosCategoria = productos.infoProductos[categoria]
-        if(productosCategoria) {
-            return productosCategoria
-        } else {
+        if (rows.length === 0){
             const error = new Error(`La categoria ${categoria} no existe`)
             error.status = 404
             throw error
-        }         
+        }
+        return rows        
     }
 
-    post(categoria, producto) {
-        productos.infoProductos[categoria].push(producto)
-        return producto
+    async post(producto) {
+        const sql =
+            `INSERT INTO producto(pro_descripcion, pro_precio, pro_id_categoria)
+            VALUES(?, ?, ?)`
+        
+        const [result] = await pool.query(sql, [
+            producto.descripcion,
+            producto.precio,
+            producto.categoria
+        ])
+
+        return {
+            id: result.insertId,
+            descripcion: producto.descripcion,
+            precio: producto.precio,
+            categoria: producto.categoria
+        }
     }
 }
 
