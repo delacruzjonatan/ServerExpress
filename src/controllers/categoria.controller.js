@@ -2,9 +2,9 @@ const CategoriaService = require('../services/categoria.service')
 
 const serviceCategoria = new CategoriaService()
 
-function getCategoria(req, res, next){
+async function getCategoria(req, res, next){
     try {
-        const categorias = serviceCategoria.get(req, res)
+        const categorias = await serviceCategoria.get(req, res)
         res.json(categorias)
     }
     catch(error) {
@@ -12,10 +12,10 @@ function getCategoria(req, res, next){
     }
 }
 
-function postCategoria(req, res, next){
+async function postCategoria(req, res, next){
     try {
-        const body = req.body
-        const resultado = serviceCategoria.post(body)
+        const categoria = req.body
+        const resultado = await serviceCategoria.post(categoria)
         res.status(201).json(resultado)       
     } catch (error) {
         next(error)        

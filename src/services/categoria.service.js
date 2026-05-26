@@ -1,22 +1,27 @@
-const productos = require('../data/productos')
+const { pool } = require('../db/connection')
 
 class CategoriaService {
-    constructor(){
-        this.productos = productos.infoProductos
+    async get() {
+        const sql =
+            `SELECT cat_id id, cat_descripcion descripcion
+               FROM categoria`
+        const [rows] = await pool.query(sql)
+        return rows
     }
 
-    get() {
-        const categorias = Object.keys(productos.infoProductos)
-        return categorias
-    }
+    async post(categoria) {
+        const sql =
+            `INSERT INTO categoria(cat_descripcion) 
+             VALUES(?)`
+        
+        const [result] = await pool.query(sql, [
+            categoria.descripcion,
+        ])
 
-    post(listaProductos) {
-        const categorias = productos.infoProductos
-        productos.infoProductos = {
-            ...categorias,
-            ...listaProductos
+        return {
+            id: result.insertId,
+            descripcion: categoria.descripcion
         }
-        return listaProductos
     }
 }
 
