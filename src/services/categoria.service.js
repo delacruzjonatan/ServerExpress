@@ -4,15 +4,16 @@ class CategoriaService {
     async get() {
         const sql =
             `SELECT cat_id id, cat_descripcion descripcion
-               FROM categoria`
+               FROM categoria 
+             WHERE cat_fechabaja IS NULL`
         const [rows] = await pool.query(sql)
         return rows
     }
 
     async post(categoria) {
         const sql =
-            `INSERT INTO categoria(cat_descripcion) 
-             VALUES(?)`
+            `INSERT INTO categoria(cat_descripcion, cat_usualta, cat_fechaalta) 
+             VALUES(?, 1, CURRENT_TIMESTAMP())`
         
         const [result] = await pool.query(sql, [
             categoria.descripcion,
@@ -22,6 +23,29 @@ class CategoriaService {
             id: result.insertId,
             descripcion: categoria.descripcion
         }
+    }
+
+    async update(categoria){
+        const sql = `UPDATE categoria 
+                        SET cat_usumodif = 1,
+                            cat_fechamodif = CURRENT_TIMESTAMP(),
+                            cat_descripcion = ?
+                      WHERE cat_id = ?`
+        await pool.query(sql, [categoria.descripcion, categoria.id])
+        return categoria
+    }
+
+    async delete(id) {
+        const sql = `UPDATE categoria 
+                        SET cat_usubaja = 1,
+                            cat_fechabaja = CURRENT_TIMESTAMP()
+                      WHERE cat_id = ?`
+
+        await pool.query(sql, [id])
+
+        return {
+            id: id,
+        }                      
     }
 }
 

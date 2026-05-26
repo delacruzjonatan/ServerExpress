@@ -22,7 +22,29 @@ async function postCategoria(req, res, next){
     }
 }
 
+async function updateCategoria(req, res, next){
+    try {
+        const categoria = req.body
+        const resultado = await serviceCategoria.update(categoria)
+        res.status(200).json(resultado)       
+    } catch (error) {
+        next(error)        
+    }
+}
+
+async function deleteCategoria(req, res, next){
+    try {
+        const id = req.params.id
+        const resultado = await serviceCategoria.delete(id)
+        res.status(200).json(resultado)       
+    } catch (error) {
+        next(error)        
+    }
+}
+
 module.exports = {
     getCategoria,
     postCategoria,
+    deleteCategoria,
+    updateCategoria,
 }
