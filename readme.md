@@ -29,6 +29,8 @@ DB_PORT=3306
 DB_DATABASE="dbserverexpress26"
 DB_USER='xxxx'
 DB_PASSWORD='xxxx'
+
+JWT_SECRET='xxxx'
 ```
 
 ### Variables de entorno
@@ -41,6 +43,7 @@ DB_PASSWORD='xxxx'
 | `DB_DATABASE` | Nombre de la base de datos | dbserverexpress26 |
 | `DB_USER` | Usuario de la base de datos | - |
 | `DB_PASSWORD` | Contraseña de la base de datos | - |
+| `JWT_SECRET` | Clave privada de JWT | - |
 
 **Nota:** Puedes copiar `.env.example` a `.env` y actualizar los valores según tu configuración local.
 
