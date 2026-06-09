@@ -35,7 +35,8 @@ async function updateCategoria(req, res, next){
 async function deleteCategoria(req, res, next){
     try {
         const id = req.params.id
-        const resultado = await serviceCategoria.delete(id)
+        const idUsuario = req.body.idUsuario
+        const resultado = await serviceCategoria.delete(idUsuario, id)
         res.status(200).json(resultado)       
     } catch (error) {
         next(error)        
