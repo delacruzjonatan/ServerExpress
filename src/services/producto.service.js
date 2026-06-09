@@ -35,12 +35,13 @@ class ProductoService {
     async post(producto) {
         const sql =
             `INSERT INTO producto(pro_descripcion, pro_precio, pro_id_categoria, pro_usualta, pro_fechaalta)
-            VALUES(?, ?, ?, 1, CURRENT_TIMESTAMP())`
+            VALUES(?, ?, ?, ?, CURRENT_TIMESTAMP())`
         
         const [result] = await pool.query(sql, [
             producto.descripcion,
             producto.precio,
-            producto.categoria
+            producto.categoria,
+            producto.idUsuario
         ])
 
         return {
